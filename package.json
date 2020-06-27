@@ -1,0 +1,23 @@
+{
+  "name": "mrdirt",
+  "version": "1.0.0",
+  "description": "Discord bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Boogamer/mr-dirt.git"
+  },
+  "author": "Boogamer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Boogamer/mr-dirt/issues"
+  },
+  "homepage": "https://github.com/Boogamer/mr-dirt#readme",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0"
+  }
+}
