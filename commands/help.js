@@ -1,18 +1,19 @@
-const utils = require("./../fwk/utils.js");
-const commands = require("./../fwk/commands.js");
+const Fwk = require("./../fwk.js");
 
-const commandName = "md-help";
+const commandName = Fwk.getCommandName("help");
 
 module.exports = {
     name: commandName,
     description: "Menu d'aide",
     format: `"${commandName}"`,
+    isValid(client, message, args) {
+        return true;
+    },
     execute(client, message, args) {
         let helpMessage = this.description + "\n";
-        for (var attr in commands) {
-            const command = commands[attr];
+        Fwk.getCommandsList().forEach(command => {
             helpMessage += "- " + command.description + " : " + command.format + "\n";
-        }
+        });
         message.channel.send(helpMessage);
     }
 }

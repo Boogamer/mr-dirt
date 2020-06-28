@@ -1,30 +1,31 @@
-const utils = require("./../fwk/utils.js");
+const Fwk = require("./../fwk.js");
 
-const commandName = "md-addrole";
+const commandName = Fwk.getCommandName("addrole");
 
 module.exports = {
     name: commandName,
     description: "Ajouter un rôle à un utilisateur",
-    format: `"${commandName} <ROLE_NAME> <USER>"`,
+    format: `"${commandName} <ROLE> <USER>"`,
+    isValid(client, message, args) {
+        return message.mentions.members.array().length > 0 &&
+            message.mentions.roles.array().length > 0;
+    },
     execute(client, message, args) {
-        if (args.length != 2) {
-            return message.channel.send("Commande invalide, merci de respecter le format : " + this.format);
+        message.mentions.members.each(guildMember => {
+            message.mentions.roles.each(role => {
+                this._addRole(message, guildMember, role);
+            });
+        });
+    },
+    _addRole(message, guildMember, role) {
+        if (guildMember.roles.cache.has(role.id)) {
+            return message.channel.send(`${guildMember} a déjà le rôle ${role}.`);
         }
-        const roleName = args[0];
-        const roleTo = message.mentions.members.first();
-        const role = message.guild.roles.cache.find(r => r.name === roleName);
-        if (role) {
-            if (roleTo.roles.cache.has(role.id)) {
-                return message.channel.send(`${roleTo.user.username} a déjà ce rôle !`);
-            }
-            if (role.permissions.has("KICK_MEMBERS")) {
-                return message.channel.send("Tu n'as pas la permission de donner ce rôle !");
-            }
-            roleTo.roles.add(role)
-                .then(m => message.channel.send(`${roleTo.user.username} possède maintenant le rôle ${role}.`))
-                .catch(e => console.error(e));
-        } else {
-            message.channel.send("le rôle n'existe pas!");
+        if (role.permissions.has("ADMINISTRATOR")) {
+            return message.channel.send(`Je ne peux pas donner le rôle ${role} à ${guildMember}.`);
         }
+        guildMember.roles.add(role)
+            .then(m => message.channel.send(`${guildMember} possède maintenant le rôle ${role}.`))
+            .catch(e => console.error(e));
     }
 }
