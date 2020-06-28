@@ -1,7 +1,7 @@
 const Fwk = require("./fwk.js");
 
 Fwk.init({
-    commandPrefix: "md-",
+    commandPrefix: "&",
     commandsPath: "./commands"
 }).then(client => {
     client.on("message", message => {

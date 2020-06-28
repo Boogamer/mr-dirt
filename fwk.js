@@ -43,7 +43,7 @@ module.exports = {
                 if (command.isValid(this._client, message, args)) {
                     command.execute(this._client, message, args);
                 } else {
-                    logMessage = "Commande invalide, merci de respecter le format : " + command.format;
+                    logMessage = `Commande invalide, merci de respecter le format : "${command.format}"`;
                     console.log(logMessage);
                     message.channel.send(logMessage);
                 }
