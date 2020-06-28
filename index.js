@@ -5,9 +5,8 @@ Fwk.init({
     commandsPath: "./commands"
 }).then(client => {
     client.on("message", message => {
-        if (!Fwk.manageCommand(message)) {
-            // message "normal" à gérer !
-        }
+        Fwk.moderate(message);
+        Fwk.checkCommand(message);
     });
     client.login(process.env.TOKEN);
 });

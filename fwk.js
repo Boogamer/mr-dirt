@@ -1,5 +1,6 @@
 const fs = require("fs");
 const Discord = require("discord.js");
+const moderation = require("./assets/moderation.json");
 
 module.exports = {
     _initParams: null,
@@ -20,6 +21,22 @@ module.exports = {
             resolve(this._client);
         });
     },
+    moderate(message) {
+        if (!message.member.roles.highest.permissions.has("ADMINISTRATOR")) {
+            for (let type in moderation) {
+                const moderationType = moderation[type];
+                const words = [];
+                moderationType.list.forEach(word => {
+                    if (message.content.toLowerCase().indexOf(word) !== -1) {
+                        words.push(word);
+                    }
+                });
+                if (words.length > 0) {
+                    this._sendModerationWarning(message, words, moderationType);
+                }
+            }
+        }
+    },
     getCommandName(name) {
         return this._initParams.commandPrefix + name;
     },
@@ -30,10 +47,9 @@ module.exports = {
         }
         return commands;
     },
-    manageCommand(message) {
+    checkCommand(message) {
         let logMessage = null;
-        const b = message.content.indexOf(this._initParams.commandPrefix) === 0;
-        if (b) {
+        if (message.content.indexOf(this._initParams.commandPrefix) === 0) {
             const args = message.content.split(" ");
             const commandName = args.shift();
             const command = this._commands[commandName];
@@ -52,7 +68,20 @@ module.exports = {
                 console.log(logMessage);
             }
         }
-        return b;
+    },
+    _sendModerationWarning(message, words, moderationType) {
+        const moderationMessage = {
+            color: moderationType.color,
+            title: "Avertissement",
+            fields: [
+                { name: "Nom de l'utilisateur", value: message.author.username },
+                { name: "Raison", value: `Usage mot interdit(s) "${words}"` }
+            ],
+            thumbnail: {
+                url: message.author.avatarURL(),
+            },
+        }
+        message.channel.send({ embed: moderationMessage });
     },
     _loadCommands(path) {
         fs.readdirSync(path).forEach(file => {
