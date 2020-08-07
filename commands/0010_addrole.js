@@ -3,6 +3,7 @@ const Fwk = require("./../fwk.js");
 const commandName = Fwk.getCommandName("addrole");
 
 module.exports = {
+    onlyAdmin: true,
     name: commandName,
     description: "Ajouter un rôle à un utilisateur",
     format: `${commandName} <ROLE> <USER>`,
@@ -19,7 +20,12 @@ module.exports = {
     },
     _addRole(message, guildMember, role) {
         if (guildMember.roles.cache.has(role.id)) {
-            return message.channel.send(`${guildMember} a déjà le rôle ${role}.`);
+            return mmessage.channel.send({
+                embed: {
+                    color: 0x3b88c3,
+                    title: `:x: ${guildMember} a déja le rôle ${role}.`
+                }
+            });
         }
         if (message.member.roles.highest.comparePositionTo(role) < 0) {
             return message.channel.send(`Tu n'as pas la permission de donner le rôle ${role} à ${guildMember}.`);

@@ -18,6 +18,8 @@
   "homepage": "https://github.com/Boogamer/mr-dirt#readme",
   "dependencies": {
     "discord.js": "^12.2.0",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "sequelize": "^6.3.4",
+    "sqlite3": "^5.0.0"
   }
 }

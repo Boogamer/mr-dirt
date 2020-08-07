@@ -3,9 +3,10 @@ const Fwk = require("./../fwk.js");
 const commandName = Fwk.getCommandName("rmrole");
 
 module.exports = {
+    onlyAdmin: true,
     name: commandName,
     description: "Supprimer un rôle à un utilisateur",
-    format: `${commandName} <ROLE> <USER>`,
+    format: `${commandName} <ROLE> <USER> `,
     isValid(client, message, args) {
         return message.mentions.members.array().length > 0 &&
             message.mentions.roles.array().length > 0;
@@ -19,7 +20,7 @@ module.exports = {
     },
     _removeRole(message, guildMember, role) {
         if (!guildMember.roles.cache.has(role.id)) {
-            return message.channel.send(`${guildMember} n'a pas le rôle ${role}.`);
+            return message.channel.send(`${guildMember} ne possède pas le rôle ${role}.`);
         }
         if (message.member.roles.highest.comparePositionTo(role) <= 0) {
             return message.channel.send(`Tu n'as pas la permission de supprimer le rôle ${role} à ${guildMember}.`);

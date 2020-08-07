@@ -4,6 +4,7 @@ const Discord = require("discord.js");
 const commandName = Fwk.getCommandName("help");
 
 module.exports = {
+    onlyAdmin: true,
     name: commandName,
     description: "Menu d'aide",
     format: `${commandName}`,
@@ -22,7 +23,7 @@ module.exports = {
             fields: fields,
             thumbnail: {
                 url: "attachment://icon.png",
-            },
+            }
         }
         message.channel.send({ files: [icon], embed: helpMessage });
     }

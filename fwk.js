@@ -15,6 +15,9 @@ module.exports = {
             if (this._initParams.commandsPath) {
                 this._loadCommands(this._initParams.commandsPath);
             }
+            if (this._initParams.daemonsPath) {
+                this._loadDaemons(this._initParams.daemonsPath);
+            }
             this._client.on("ready", () => {
                 console.log(`Logged in as ${this._client.user.tag}!`);
             });
@@ -22,7 +25,7 @@ module.exports = {
         });
     },
     moderate(message) {
-        if (!message.member.roles.highest.permissions.has("ADMINISTRATOR")) {
+        if (message.member && !message.member.roles.highest.permissions.has("ADMINISTRATOR")) {
             for (let type in moderation) {
                 const moderationType = moderation[type];
                 const words = [];
@@ -37,6 +40,32 @@ module.exports = {
             }
         }
     },
+    getGuildMemberRoleById(guildMember, id) {
+        let searchRole = null;
+        guildMember.roles.cache.map(role => {
+            if (role.id == id) {
+                searchRole = role;
+                return;
+            }
+        });
+        return searchRole;
+    },
+    getGuildRoleById(guild, id) {
+        let searchRole = null;
+        guild.roles.cache.map(role => {
+            if (role.id == id) {
+                searchRole = role;
+                return;
+            }
+        });
+        return searchRole;
+    },
+    isUserFromCommandArg(id) {
+        return id.indexOf("<@!") != -1 && id.indexOf(">") != -1;
+    },
+    getUserIdFromCommandArg(id) {
+        return id.replace("<@!", "").replace(">", "");
+    },
     getCommandName(name) {
         return this._initParams.commandPrefix + name;
     },
@@ -46,6 +75,9 @@ module.exports = {
             commands.push(this._commands[attr])
         }
         return commands;
+    },
+    getIncorrectCommandFormat(commandFormat) {
+        return `Commande invalide, merci de respecter le format : "${commandFormat}"`;
     },
     checkCommand(message) {
         let logMessage = null;
@@ -57,9 +89,19 @@ module.exports = {
                 logMessage = `Execution de la commande "${commandName}" avec les paramètres "${args}"`;
                 console.log(logMessage);
                 if (command.isValid(this._client, message, args)) {
+                    if (command.onlyAdmin) {
+                        if (!message.member.hasPermission(Discord.Permissions.FLAGS.ADMINISTRATOR)) {
+                            return message.channel.send({
+                                embed: {
+                                    color: 0xff0000,
+                                    title: `:x: Tu n'as pas la permission d'utiliser cette commande.`
+                                }
+                            });
+                        }
+                    }
                     command.execute(this._client, message, args);
                 } else {
-                    logMessage = `Commande invalide, merci de respecter le format : "${command.format}"`;
+                    logMessage = this.getIncorrectCommandFormat(command.format);
                     console.log(logMessage);
                     message.channel.send(logMessage);
                 }
@@ -86,8 +128,15 @@ module.exports = {
     _loadCommands(path) {
         fs.readdirSync(path).forEach(file => {
             console.log(`chargement commande "${file}"`);
-            const command = require(this._initParams.commandsPath + "/" + file);
+            const command = require(path + "/" + file);
             this._commands[command.name] = command;
+        });
+    },
+    _loadDaemons(path) {
+        fs.readdirSync(path).forEach(file => {
+            console.log(`chargement daemon "${file}"`);
+            const daemon = require(path + "/" + file);
+            daemon.start(this._client);
         });
     }
 };
