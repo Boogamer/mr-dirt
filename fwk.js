@@ -1,16 +1,26 @@
 const fs = require("fs");
 const Discord = require("discord.js");
 const moderation = require("./assets/moderation.json");
+const Sequelize = require('sequelize');
 
 module.exports = {
     _initParams: null,
+    _locales: {},
     _commands: {},
+    _daemons: [],
+    _sequelize: null,
     _client: new Discord.Client(),
     init(params) {
         return new Promise((resolve, reject) => {
             this._initParams = params;
             if (process.env.NODE_ENV !== "production") {
                 require("dotenv").config();
+            }
+            if (this._initParams.localesPath) {
+                this._loadLocales(this._initParams.localesPath);
+            }
+            if (this._initParams.modelsPath) {
+                this._loadModels(this._initParams.modelsPath);
             }
             if (this._initParams.commandsPath) {
                 this._loadCommands(this._initParams.commandsPath);
@@ -99,7 +109,11 @@ module.exports = {
                             });
                         }
                     }
-                    command.execute(this._client, message, args);
+                    try {
+                        command.execute(this._client, message, args);
+                    } catch(e) {
+                        console.error(e);
+                    }
                 } else {
                     logMessage = this.getIncorrectCommandFormat(command.format);
                     console.log(logMessage);
@@ -111,32 +125,63 @@ module.exports = {
             }
         }
     },
+    getModel(modelName) {
+        return this._sequelize.models[modelName];
+    },
     _sendModerationWarning(message, words, moderationType) {
-        const moderationMessage = {
-            color: moderationType.color,
-            title: "Avertissement",
-            fields: [
-                { name: "Nom de l'utilisateur", value: message.author.username },
-                { name: "Raison", value: `Usage mot interdit(s) "${words}"` }
-            ],
-            thumbnail: {
-                url: message.author.avatarURL(),
-            },
-        }
-        message.channel.send({ embed: moderationMessage });
+        message.channel.send({
+            embed: {
+                color: moderationType.color,
+                title: "Avertissement",
+                fields: [
+                    { name: "Nom de l'utilisateur", value: message.author.username },
+                    { name: "Raison", value: `Usage mot interdit(s) "${words}"` }
+                ],
+                thumbnail: {
+                    url: message.author.avatarURL(),
+                },
+            }
+        });
+    },
+    _loadLocales(path) {
+        fs.readdirSync(path).forEach(file => {
+            console.log(`Chargement locale "${file}"`);
+            const locale = require(path + "/" + file);
+            this._locales[file] = locale;
+        });
     },
     _loadCommands(path) {
         fs.readdirSync(path).forEach(file => {
-            console.log(`chargement commande "${file}"`);
+            console.log(`Chargement commande "${file}"`);
             const command = require(path + "/" + file);
             this._commands[command.name] = command;
         });
     },
     _loadDaemons(path) {
         fs.readdirSync(path).forEach(file => {
-            console.log(`chargement daemon "${file}"`);
+            console.log(`Chargement daemon "${file}"`);
             const daemon = require(path + "/" + file);
-            daemon.start(this._client);
+            this._daemons.push(daemon);
+        });
+        setInterval(() => {
+            this._daemons.forEach(daemon => {
+                daemon.tick(this._client);
+            });
+        }, 1000);
+    },
+    _loadModels(path) {
+        this._sequelize = new Sequelize('database', 'user', 'password', {
+            host: 'localhost',
+            dialect: 'sqlite',
+            logging: false,
+            storage: 'database.sqlite'
+        });
+        fs.readdirSync(path).forEach(file => {
+            console.log(`Chargement model "${file}"`);
+            const model = require(path + "/" + file);
+            model.init(this._sequelize).sync(model.syncOptions).then(seqModel => {
+                model.afterSync(seqModel);
+            });
         });
     }
 };

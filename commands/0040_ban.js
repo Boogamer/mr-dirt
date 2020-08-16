@@ -7,9 +7,9 @@ module.exports = {
     onlyAdmin: true,
     name: commandName,
     description: "Bannir un utilisateur",
-    format: `${commandName} <USER> <REASON>`,
+    format: `${commandName} <USER> <opt. REASON>`,
     isValid(client, message, args) {
-        return args.length >= 2 &&
+        return args.length >= 1 &&
             Fwk.isUserFromCommandArg(args[0]);
     },
     execute(client, message, args) {
@@ -27,12 +27,15 @@ module.exports = {
         if (firstGuildMember.hasPermission(Discord.Permissions.FLAGS.ADMINISTRATOR)) {
             return message.channel.send({
                 embed: {
-                    color: 0x3b88c3,
+                    color: 0xff0000,
                     title: `:x: Je ne peux pas bannir un administrateur.`
                 }
             });
         }
-        const reason = parameters.join(" ");
+        let reason = parameters.join(" ").trim();
+        if(reason == null || reason == "") {
+            reason = "non spécifiée.";
+        }
         if (firstGuildMember.id == userId) {
             if (firstGuildMember.user.bot) {
                 this._banUser(firstGuildMember, reason, message);

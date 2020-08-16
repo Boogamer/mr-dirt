@@ -1,6 +1,6 @@
 const Fwk = require("./../fwk.js");
 const Discord = require("discord.js");
-const Model = require("./../model.js");
+const moment = require('moment');
 
 const commandName = Fwk.getCommandName("mute");
 
@@ -31,7 +31,7 @@ module.exports = {
                 }
             });
         }
-        Model.properties.findOne({ where: { key: "MUTE_ROLE_ID" } }).then(property => {
+        Fwk.getModel("properties").findOne({ where: { key: "MUTE_ROLE_ID" } }).then(property => {
             const mutedRole = Fwk.getGuildRoleById(message.guild, property.value);
             if (mutedRole != null) {
                 if (firstGuildMember.roles.cache.has(mutedRole.id)) {
@@ -47,7 +47,7 @@ module.exports = {
         });
     },
     _manageGuild(message, guildMember, mutedRole) {
-        Model.properties.findOne({ where: { key: "MUTE_ROLE_NAME" } }).then(property => {
+        Fwk.getModel("properties").findOne({ where: { key: "MUTE_ROLE_NAME" } }).then(property => {
             if (mutedRole == null) {
                 message.guild.roles.create({
                     data: {
@@ -55,7 +55,7 @@ module.exports = {
                         permissions: []
                     }
                 }).then(role => {
-                    Model.properties.update({ value: role.id }, { where: { key: "MUTE_ROLE_ID" } });
+                    Fwk.getModel("properties").update({ value: role.id }, { where: { key: "MUTE_ROLE_ID" } });
                     mutedRole = role;
                     this._manageUser(message, guildMember, mutedRole);
                 }).catch(console.error);
@@ -68,6 +68,7 @@ module.exports = {
     },
     _manageUser(message, guildMember, mutedRole) {
         guildMember.roles.add(mutedRole).then(m => {
+            Fwk.getModel("mutes").create({ guildId: message.guild.id, guildMemberId: guildMember.id, channelId: message.channel.id, endDateTime: moment().add(10, 's').format() });
             this._manageChannels(message, guildMember, mutedRole);
         });
     },

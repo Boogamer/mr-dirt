@@ -1,5 +1,4 @@
 const Fwk = require("./../fwk.js");
-const Model = require("./../model.js");
 
 const commandName = Fwk.getCommandName("unmute");
 
@@ -22,7 +21,7 @@ module.exports = {
                 }
             });
         }
-        Model.properties.findOne({ where: { key: "MUTE_ROLE_ID" } }).then(property => {
+        Fwk.getModel("properties").findOne({ where: { key: "MUTE_ROLE_ID" } }).then(property => {
             const mutedRole = Fwk.getGuildRoleById(message.guild, property.value);
             if (mutedRole == null) {
                 return message.channel.send({
