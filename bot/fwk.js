@@ -1,7 +1,8 @@
 const fs = require("fs");
 const Discord = require("discord.js");
-const moderation = require("./assets/moderation.json");
 const Sequelize = require('sequelize');
+
+const moderation = require(__dirname + "/assets/moderation.json");
 
 module.exports = {
     _initParams: null,
@@ -13,9 +14,6 @@ module.exports = {
     init(params) {
         return new Promise((resolve, reject) => {
             this._initParams = params;
-            if (process.env.NODE_ENV !== "production") {
-                require("dotenv").config();
-            }
             if (this._initParams.localesPath) {
                 this._loadLocales(this._initParams.localesPath);
             }

@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
-const Fwk = require("./../fwk.js");
+
+const Fwk = require(__dirname + "/../fwk.js");
 
 module.exports = {
     syncOptions: {},

@@ -1,4 +1,4 @@
-const Fwk = require("./../fwk.js");
+const Fwk = require(__dirname + "/../fwk.js");
 
 const commandName = Fwk.getCommandName("addrole");
 
@@ -28,7 +28,12 @@ module.exports = {
             });
         }
         if (message.member.roles.highest.comparePositionTo(role) < 0) {
-            return message.channel.send(`Tu n'as pas la permission de donner le rôle ${role} à ${guildMember}.`);
+            return message.channel.send({
+                embed: {
+                    color: 0xff0000,
+                    title: `:x: Tu n'as pas la permission de donner le rôle ${role} à ${guildMember}.`
+                }
+            });
         }
         if (role.permissions.has("ADMINISTRATOR")) {
             return message.channel.send(`Tu n'as pas la permission de donner le rôle ${role} à ${guildMember}.`);

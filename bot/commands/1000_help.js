@@ -1,5 +1,6 @@
-const Fwk = require("./../fwk.js");
 const Discord = require("discord.js");
+
+const Fwk = require(__dirname + "/../fwk.js");
 
 const commandName = Fwk.getCommandName("help");
 

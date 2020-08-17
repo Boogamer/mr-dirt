@@ -1,4 +1,4 @@
-const Fwk = require("./../fwk.js");
+const Fwk = require(__dirname + "/../fwk.js");
 
 const commandName = Fwk.getCommandName("kick");
 

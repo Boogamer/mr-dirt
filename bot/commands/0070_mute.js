@@ -1,6 +1,7 @@
-const Fwk = require("./../fwk.js");
 const Discord = require("discord.js");
 const moment = require('moment');
+
+const Fwk = require(__dirname + "/../fwk.js");
 
 const commandName = Fwk.getCommandName("mute");
 
