@@ -5,7 +5,7 @@ const Sequelize = require('sequelize');
 const moderation = require(__dirname + "/assets/moderation.json");
 
 module.exports = {
-    _initParams: null,
+    _initParams: { commandPrefix: "&" },
     _locales: {},
     _commands: {},
     _daemons: [],
@@ -109,7 +109,7 @@ module.exports = {
                     }
                     try {
                         command.execute(this._client, message, args);
-                    } catch(e) {
+                    } catch (e) {
                         console.error(e);
                     }
                 } else {
