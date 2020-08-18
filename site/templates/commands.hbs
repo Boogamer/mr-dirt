@@ -1,12 +1,36 @@
 {{> header}}
 
-{{#each list}}
-
-<div class="card float-left m-1" style="width: 22rem; height:10rem;">
+<div class="card m-1">
     <div class="card-body">
-        <h5 class="card-title">{{format}}</h5>
-        <p>{{description}}</p>
+        <h5 class="card-title">{{label "I18N_COMMANDS_LIST"}}</h5>
     </div>
 </div>
 
-{{/each}}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md">
+            {{#each list}}
+            {{#if (is (modulo @index 2) 0)}}
+            <div class="card mt-1">
+                <div class="card-body">
+                    <h5 class="card-title">{{format}}</h5>
+                    <p>{{description}}</p>
+                </div>
+            </div>
+            {{/if}}
+            {{/each}}
+        </div>
+        <div class="col-md">
+            {{#each list}}
+            {{#if (isnt (modulo @index 2) 0)}}
+            <div class="card mt-1">
+                <div class="card-body">
+                    <h5 class="card-title">{{format}}</h5>
+                    <p>{{description}}</p>
+                </div>
+            </div>
+            {{/if}}
+            {{/each}}
+        </div>
+    </div>
+</div>

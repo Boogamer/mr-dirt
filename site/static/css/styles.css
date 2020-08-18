@@ -1,0 +1,44 @@
+html {
+    width: 100%;
+    height:100%;
+}
+
+head {
+    width: 100%;
+    height:100%;
+}
+
+body {
+    width: 100%;
+    height:100%;
+    background-color: #212529;
+}
+
+.main-container {
+    max-width: 1280px;
+    margin: auto;
+    padding-top:90px;
+    background-color: #525659;
+    height: 100%;
+}
+
+.header-container {
+    max-width: 1280px;
+    margin: auto;
+    background-color: #343a40 !important;
+    height:90px;
+}
+
+.page-menu-item {
+    background-color: #343a40;
+    color: white;
+    border: none;
+    padding: 0;
+    width: 130px;
+    height: 50px;
+    float: left;
+}
+
+.page-menu-item:focus {
+    outline:0;
+}

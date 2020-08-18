@@ -4,7 +4,7 @@
   "description": "Discord bot",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "node postinstall.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Boogamer/mr-dirt#readme",
   "dependencies": {
+    "bootstrap-icons": "^1.0.0-alpha5",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "discord.js": "^12.2.0",
@@ -25,6 +26,7 @@
     "express-handlebars": "^5.1.0",
     "express-session": "^1.17.1",
     "got": "^11.5.2",
+    "handlebars-helpers": "^0.10.0",
     "moment": "^2.27.0",
     "sequelize": "^6.3.4",
     "sqlite3": "^5.0.0"

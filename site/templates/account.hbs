@@ -1,0 +1,20 @@
+{{> header}}
+
+<div class="card m-1">
+    <div class="card-body">
+        <h5 class="card-title">{{label "I18N_MY_ACCOUNT"}}</h5>
+        <p class="card-text">
+            <ul>
+                <li>
+                    ID : {{user.id}}
+                </li>
+                <li>
+                    Hashtag : {{user.username}}#{{user.discriminator}}
+                </li>
+                <li>
+                    Email : {{user.email}}
+                </li>
+            </ul>
+        </p>
+    </div>
+</div>

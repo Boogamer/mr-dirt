@@ -1,5 +1,7 @@
 const got = require("got");
 
+const Fwk = require(__dirname + "/../fwk.js");
+
 module.exports = {
     init(app) {
         app.get("/login", function (req, res) {
@@ -8,7 +10,13 @@ module.exports = {
                 headers: { "authorization": req.session.authorization },
                 responseType: "json"
             }).then((result) => {
-                req.session.user = result.body;
+                const user = result.body;
+                user.selectedLocale = user.locale;
+                if (user.locale.indexOf("-") != -1) {
+                    user.selectedLocale = user.locale.split("-")[1].toLowerCase();
+                }
+                req.session.user = user;
+                Fwk.setLocale(user.selectedLocale);
                 res.json({ result: "OK" });
             });
         });
