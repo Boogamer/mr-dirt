@@ -10,14 +10,11 @@ module.exports = {
                 headers: { "authorization": req.session.authorization },
                 responseType: "json"
             }).then((result) => {
-                const user = result.body;
-                user.selectedLocale = user.locale;
-                if (user.locale.indexOf("-") != -1) {
-                    user.selectedLocale = user.locale.split("-")[1].toLowerCase();
-                }
-                req.session.user = user;
-                Fwk.setLocale(user.selectedLocale);
-                res.json({ result: "OK" });
+                const routeRequestedBeforeAuthentication = Fwk.setAuthenticated(result.body, req);
+                res.json({
+                    result: "OK",
+                    routeRequestedBeforeAuthentication: routeRequestedBeforeAuthentication
+                });
             });
         });
     }

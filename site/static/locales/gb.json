@@ -1,6 +1,8 @@
 {
-    "I18N_HOMEPAGE": "Homepage",
-    "I18N_COMMANDS_LIST": "Commands list",
+    "I18N_NEWS": "News",
+    "I18N_COMMANDS": "Commands",
+    "I18N_HOME": "Home",
+    "I18N_MANAGE": "Manage",
     "I18N_LOGIN": "Login",
     "I18N_MY_ACCOUNT": "My account",
     "I18N_MY_GUILDS": "My guilds",

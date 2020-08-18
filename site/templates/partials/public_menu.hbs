@@ -1,0 +1,26 @@
+<div class="page-menu-container">
+    <a href="/">
+        <button type="button" class="page-menu-item {{#if (is activeMenu "home")}}page-menu-item-actif{{/if}}">
+            <svg class="bi" width="24" height="24" fill="currentColor">
+                <use xlink:href="/assets/bootstrap-icons.svg#house-door" />
+            </svg>
+            {{label "I18N_HOME"}}
+        </button>
+    </a>
+    <a href="/news">
+        <button type="button" class="page-menu-item {{#if (is activeMenu "news")}}page-menu-item-actif{{/if}}">
+            <svg class="bi" width="24" height="24" fill="currentColor">
+                <use xlink:href="/assets/bootstrap-icons.svg#info-square" />
+            </svg>
+            {{label "I18N_NEWS"}}
+        </button>
+    </a>
+    <a href="/commands">
+        <button type="button" class="page-menu-item {{#if (is activeMenu "commands")}}page-menu-item-actif{{/if}}">
+         <svg class="bi" width="24" height="24" fill="currentColor">
+                <use xlink:href="/assets/bootstrap-icons.svg#terminal" />
+            </svg>
+            {{label "I18N_COMMANDS"}}
+        </button>
+    </a>
+</div>

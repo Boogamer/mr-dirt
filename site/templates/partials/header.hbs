@@ -5,8 +5,7 @@
         Mr. DIRT
     </a>
     {{#unless user}}
-    <a href="https://discord.com/api/oauth2/authorize?client_id=739490722151137330&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&response_type=token&scope=identify%20email%20guilds"
-        class="btn btn-outline-success my-2 my-sm-0">{{label "I18N_LOGIN"}}</a>
+    <a href="/account" class="btn btn-outline-success my-2 my-sm-0">{{label "I18N_LOGIN"}}</a>
     {{/unless}}
     {{#if user}}
     <div class="form-inline">
@@ -61,5 +60,3 @@
     </div>
     {{/if}}
 </nav>
-
-<script src="/js/header.js"></script>

@@ -1,6 +1,8 @@
 {
-    "I18N_HOMEPAGE": "Page d'accueil",
-    "I18N_COMMANDS_LIST": "Liste des commandes",
+    "I18N_NEWS": "Nouveautés",
+    "I18N_COMMANDS": "Commandes",
+    "I18N_HOME": "Accueil",
+    "I18N_MANAGE": "Gérer",
     "I18N_LOGIN": "Connexion",
     "I18N_MY_ACCOUNT": "Mon compte",
     "I18N_MY_GUILDS": "Mes serveurs",

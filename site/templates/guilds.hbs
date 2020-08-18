@@ -1,11 +1,31 @@
 {{> header}}
 
-{{#each list}}
+{{> private_menu}}
 
-<div class="card m-1">
-    <div class="card-body">
-        <h5 class="card-title">{{name}}</h5>
-    </div>
-</div>
-
-{{/each}}
+<table class="table table-striped table-dark mt-4" style="width:90%;margin:auto;">
+    <thead>
+        <tr>
+            <th scope="col">Icon</th>
+            <th scope="col">Name</th>
+            <th scope="col">Owner</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each list}}
+        <tr>
+            <td><img width="30" height="30" class="rounded-circle"
+                    src="https://cdn.discordapp.com/icons/{{id}}/{{icon}}.png"></td>
+            <td>{{name}}</td>
+            <td>
+                {{#if owner}}
+                <svg class="bi" width="24" height="24" fill="currentColor">
+                    <use xlink:href="/assets/bootstrap-icons.svg#check2-circle" />
+                </svg>
+                {{/if}}
+            </td>
+            <td>?</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

@@ -1,20 +1,8 @@
 {{> header}}
 
-<button type="button" class="page-menu-item">Nouveautés</button>
-<button type="button" class="page-menu-item">Commandes</button>
-<button type="button" class="page-menu-item">Autre</button>
+{{> public_menu}}
 
-<!--
-<div class="card m-1">
-    <div class="card-body">
-        <h5 class="card-title">{{label "I18N_HOMEPAGE"}}</h5>
-        <p class="card-text">
-        <ul>
-            <li><a href="/commands">{{label "I18N_COMMANDS_LIST"}}</a></li>
-        </ul>
-        </p>
-    </div>
-</div>
--->
-
-<script src="/js/home.js"></script>
+<center>
+    <a href="/guilds" style="width:200px;height:70px;font-size:34px;" type="button"
+        class="btn btn-success mt-5">{{label "I18N_MANAGE"}}</a>
+</center>

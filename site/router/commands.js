@@ -11,7 +11,8 @@ module.exports = {
             });
             res.render("commands", {
                 user: req.session.user,
-                list: commands
+                list: commands,
+                activeMenu: "commands"
             });
         });
     }

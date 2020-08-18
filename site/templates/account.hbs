@@ -1,20 +1,20 @@
 {{> header}}
 
-<div class="card m-1">
-    <div class="card-body">
-        <h5 class="card-title">{{label "I18N_MY_ACCOUNT"}}</h5>
-        <p class="card-text">
-            <ul>
-                <li>
-                    ID : {{user.id}}
-                </li>
-                <li>
-                    Hashtag : {{user.username}}#{{user.discriminator}}
-                </li>
-                <li>
-                    Email : {{user.email}}
-                </li>
-            </ul>
-        </p>
-    </div>
-</div>
+{{> private_menu}}
+
+<table class="table table-striped table-dark mt-4" style="width:90%;margin:auto;">
+    <tbody>
+        <tr>
+            <td>ID</td>
+            <td>{{user.id}}</td>
+        </tr>
+        <tr>
+            <td>Hashtag</td>
+            <td>{{user.username}}#{{user.discriminator}}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{user.email}}</td>
+        </tr>
+    </tbody>
+</table>
