@@ -2,10 +2,16 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const compression = require("compression");
 const fs = require("fs");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
 
 const VIEWS_DIRECTORY = __dirname + "/site/templates";
 const STATIC_DIRECTORY = __dirname + "/site/static";
 const ROUTER_DIRECTORY = __dirname + "/site/router";
+
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
+}
 
 const hbs = exphbs.create({
     extname: ".hbs",
@@ -16,6 +22,12 @@ const hbs = exphbs.create({
 const app = express();
 app.use(express.static(STATIC_DIRECTORY));
 app.use(compression());
+app.use(cookieParser());
+app.use(session({
+    secret: process.env.SITE_SESSION_SECRET_KEY,
+    resave: false,
+    saveUninitialized: false
+}));
 app.set("views", VIEWS_DIRECTORY);
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");

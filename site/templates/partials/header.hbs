@@ -1,9 +1,24 @@
 <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand" href="/">
-        <img src="/assets/favicon-32x32.png" width="30" height="30" class="d-inline-block align-top" alt="icon" loading="lazy">
+        <img src="/assets/favicon-32x32.png" width="30" height="30" class="d-inline-block align-top" alt="icon"
+            loading="lazy">
         Mr. DIRT
     </a>
-    <form class="form-inline" action="/login">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
-    </form>
+    {{#unless user}}
+    <a href="https://discord.com/api/oauth2/authorize?client_id=739490722151137330&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&response_type=token&scope=identify%20email%20guilds"
+        class="btn btn-outline-success my-2 my-sm-0">Connexion</a>
+    {{/unless}}
+    {{#if user}}
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{user.username}}#{{user.discriminator}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#" onclick="logout()">Deconnexion</a>
+        </div>
+    </div>
+    {{/if}}
 </nav>
+
+<script src="/js/header.js"></script>
