@@ -12,7 +12,6 @@ module.exports = {
                 }).then((result) => {
                     const guilds = result.body;
                     res.render("guilds", {
-                        user: req.session.user,
                         list: guilds,
                         activeMenu: "guilds"
                     });

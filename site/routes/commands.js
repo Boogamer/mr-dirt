@@ -10,7 +10,6 @@ module.exports = {
                 commands.push(command);
             });
             res.render("commands", {
-                user: req.session.user,
                 list: commands,
                 activeMenu: "commands"
             });

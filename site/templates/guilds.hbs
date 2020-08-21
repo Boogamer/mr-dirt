@@ -21,13 +21,13 @@
             <div class="card-body">
                 <h5 class="card-title">{{name}}</h5>
                 <p class="card-text">
-                    {{label "I18N_OWNER"}}
+                    {{label "I18N_OWNER" ""}}
                     :
                     {{#unless owner}}
-                    {{label "I18N_NO"}}
+                    {{label "I18N_NO" ""}}
                     {{/unless}}
                     {{#if owner}}
-                    {{label "I18N_YES"}}
+                    {{label "I18N_YES" ""}}
                     {{/if}}
                 </p>
             </div>

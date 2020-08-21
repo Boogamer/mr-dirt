@@ -4,61 +4,61 @@
             loading="lazy">
         Mr. DIRT
     </a>
-    {{#unless user}}
-    <a href="/account" class="btn btn-outline-success my-2 my-sm-0">{{label "I18N_LOGIN"}}</a>
+    {{#unless session.user}}
+    <a href="/account" class="btn btn-outline-success my-2 my-sm-0">{{label "I18N_LOGIN" ""}}</a>
     {{/unless}}
-    {{#if user}}
+    {{#if session.user}}
     <div class="form-inline">
         <div class="dropdown mr-2">
             <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <img width="30" height="30"
-                    src="https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/{{user.selectedLocale}}.svg">
-                {{label (append "I18N_LOCALE_" (upcase user.selectedLocale))}}
+                    src="https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/{{session.locale}}.svg">
+                {{label (append "I18N_LOCALE_" (upcase session.locale)) ""}}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="#" onclick="setLocale('fr')">
                     <img width="30" height="30"
                         src="https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/fr.svg">
-                    {{label "I18N_LOCALE_FR"}}
+                    {{label "I18N_LOCALE_FR" ""}}
                 </a>
                 <a class="dropdown-item" href="#" onclick="setLocale('gb')">
                     <img width="30" height="30"
                         src="https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/gb.svg">
-                    {{label "I18N_LOCALE_GB"}}
+                    {{label "I18N_LOCALE_GB" ""}}
                 </a>
             </div>
         </div>
         <div class="dropdown">
             <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                {{#unless user.avatar}}
+                {{#unless session.user.avatar}}
                 <img width="30" height="30" class="rounded-circle" src="https://cdn.discordapp.com/embed/avatars/1.png">
                 {{/unless}}
-                {{#if user.avatar}}
+                {{#if session.user.avatar}}
                 <img width="30" height="30" class="rounded-circle"
-                    src="https://cdn.discordapp.com/avatars/{{user.id}}/{{user.avatar}}.png">
+                    src="https://cdn.discordapp.com/avatars/{{session.user.id}}/{{session.user.avatar}}.png">
                 {{/if}}
-                {{user.username}}#{{user.discriminator}}
+                {{session.user.username}}#{{session.user.discriminator}}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="/account">
                     <svg class="bi" width="24" height="24" fill="currentColor">
                         <use xlink:href="/assets/bootstrap-icons.svg#person-square" />
                     </svg>
-                    {{label "I18N_MY_ACCOUNT"}}
+                    {{label "I18N_MY_ACCOUNT" ""}}
                 </a>
                 <a class="dropdown-item" href="/guilds">
                     <svg class="bi" width="24" height="24" fill="currentColor">
                         <use xlink:href="/assets/bootstrap-icons.svg#shield-shaded" />
                     </svg>
-                    {{label "I18N_MY_GUILDS"}}
+                    {{label "I18N_MY_GUILDS" ""}}
                 </a>
                 <a class="dropdown-item" style="color:red" href="#" onclick="logout()">
                     <svg class="bi" width="24" height="24" fill="currentColor">
                         <use xlink:href="/assets/bootstrap-icons.svg#x-square" />
                     </svg>
-                    {{label "I18N_LOGOUT"}}
+                    {{label "I18N_LOGOUT" ""}}
                 </a>
             </div>
         </div>
