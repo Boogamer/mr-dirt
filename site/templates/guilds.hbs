@@ -2,30 +2,36 @@
 
 {{> private_menu}}
 
-<table class="table table-striped table-dark mt-4" style="width:90%;margin:auto;">
-    <thead>
-        <tr>
-            <th scope="col">Icon</th>
-            <th scope="col">Name</th>
-            <th scope="col">Owner</th>
-            <th scope="col">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#each list}}
-        <tr>
-            <td><img width="30" height="30" class="rounded-circle"
-                    src="https://cdn.discordapp.com/icons/{{id}}/{{icon}}.png"></td>
-            <td>{{name}}</td>
-            <td>
-                {{#if owner}}
-                <svg class="bi" width="24" height="24" fill="currentColor">
-                    <use xlink:href="/assets/bootstrap-icons.svg#check2-circle" />
-                </svg>
-                {{/if}}
-            </td>
-            <td>?</td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
+{{#each list}}
+<div class="card mx-auto {{#not @last}}mb-3{{/not}}" style="max-width: 600px; border:none; ">
+    <div class="row no-gutters"
+        style="border:none; border-left-style: outset;border-left-width: 20px;border-left-color: #343a40; border-radius: 3px;">
+        <div class="col-md-2">
+            {{#unless icon}}
+            <img width="92" height="92" class="rounded-circle" src="/assets/poop.png"
+                style="margin-left: 4px; margin-top: 4px">
+            {{/unless}}
+            {{#if icon}}
+            <img width="92" height="92" class="rounded-circle"
+                src="https://cdn.discordapp.com/icons/{{id}}/{{icon}}.png"
+                style="margin-left: 4px; border: 2px solid; margin-top: 4px">
+            {{/if}}
+        </div>
+        <div class="col-md-10">
+            <div class="card-body">
+                <h5 class="card-title">{{name}}</h5>
+                <p class="card-text">
+                    {{label "I18N_OWNER"}}
+                    :
+                    {{#unless owner}}
+                    {{label "I18N_NO"}}
+                    {{/unless}}
+                    {{#if owner}}
+                    {{label "I18N_YES"}}
+                    {{/if}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{{/each}}

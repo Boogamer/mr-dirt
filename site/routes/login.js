@@ -4,7 +4,7 @@ const Fwk = require(__dirname + "/../fwk.js");
 
 module.exports = {
     init(app) {
-        app.get("/login", function (req, res) {
+        app.get("/services/login", function (req, res) {
             req.session.authorization = `${req.query.tokenType} ${req.query.accessToken}`;
             got("https://discordapp.com/api/users/@me", {
                 headers: { "authorization": req.session.authorization },

@@ -7,6 +7,9 @@
     "I18N_MY_ACCOUNT": "My account",
     "I18N_MY_GUILDS": "My guilds",
     "I18N_LOGOUT": "Logout",
+    "I18N_OWNER": "Owner",
+    "I18N_YES" : "Yes",
+    "I18N_NO" : "No",
     "I18N_LOCALE_FR": "Français",
     "I18N_LOCALE_GB": "English"
 }

@@ -7,6 +7,9 @@
     "I18N_MY_ACCOUNT": "Mon compte",
     "I18N_MY_GUILDS": "Mes serveurs",
     "I18N_LOGOUT": "Déconnexion",
+    "I18N_OWNER": "Propriértaire",
+    "I18N_YES" : "Oui",
+    "I18N_NO" : "Non",
     "I18N_LOCALE_FR": "Français",
     "I18N_LOCALE_GB": "English"
 }

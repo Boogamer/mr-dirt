@@ -14,7 +14,7 @@
                 aria-haspopup="true" aria-expanded="false">
                 <img width="30" height="30"
                     src="https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/{{user.selectedLocale}}.svg">
-                {{label (append "I18N_LOCALE_" (upcase user.selectedLocale)) }}
+                {{label (append "I18N_LOCALE_" (upcase user.selectedLocale))}}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="#" onclick="setLocale('fr')">
@@ -32,8 +32,13 @@
         <div class="dropdown">
             <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
+                {{#unless user.avatar}}
+                <img width="30" height="30" class="rounded-circle" src="https://cdn.discordapp.com/embed/avatars/1.png">
+                {{/unless}}
+                {{#if user.avatar}}
                 <img width="30" height="30" class="rounded-circle"
                     src="https://cdn.discordapp.com/avatars/{{user.id}}/{{user.avatar}}.png">
+                {{/if}}
                 {{user.username}}#{{user.discriminator}}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
