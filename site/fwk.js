@@ -37,10 +37,10 @@ module.exports = {
             }
         } else {
             req.session.destroy((err) => {
-                console.error(err);
+                
             });
         }
-        return req.session.routeRequestedBeforeAuthentication;
+        return req.session?.routeRequestedBeforeAuthentication;
     },
     getLabel(key, params, options) {
         const locale = options.data.root._locals.session?.locale || "gb";
