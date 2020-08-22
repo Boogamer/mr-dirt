@@ -1,6 +1,6 @@
-const Fwk = require(__dirname + "/../fwk.js");
+const fwk = require(__dirname + "/../fwk.js");
 
-const commandName = Fwk.getCommandName("addrole");
+const commandName = fwk.getCommandName("addrole");
 
 module.exports = {
     onlyAdmin: true,

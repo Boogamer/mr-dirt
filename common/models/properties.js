@@ -1,11 +1,9 @@
-const Sequelize = require('sequelize');
-
-const Fwk = require(__dirname + "/../fwk.js");
+const Sequelize = require("sequelize");
 
 module.exports = {
     syncOptions: {},
     init(sequelize) {
-        return sequelize.define('properties', {
+        return sequelize.define("properties", {
             key: { type: Sequelize.STRING, unique: true },
             value: { type: Sequelize.STRING }
         });

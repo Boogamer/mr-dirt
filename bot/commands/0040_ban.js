@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
 
-const Fwk = require(__dirname + "/../fwk.js");
+const fwk = require(__dirname + "/../fwk.js");
 
-const commandName = Fwk.getCommandName("ban");
+const commandName = fwk.getCommandName("ban");
 
 module.exports = {
     onlyAdmin: true,
@@ -11,11 +11,11 @@ module.exports = {
     format: `${commandName} <USER> <opt. REASON>`,
     isValid(client, message, args) {
         return args.length >= 1 &&
-            Fwk.isUserFromCommandArg(args[0]);
+            fwk.isUserFromCommandArg(args[0]);
     },
     execute(client, message, args) {
         const parameters = args.slice();
-        const userId = Fwk.getUserIdFromCommandArg(parameters.shift());
+        const userId = fwk.getUserIdFromCommandArg(parameters.shift());
         const firstGuildMember = message.mentions.members.first();
         if (firstGuildMember == null) {
             return message.channel.send({
@@ -57,7 +57,7 @@ module.exports = {
                 }).catch(console.error);
             }
         } else {
-            return message.channel.send(Fwk.getIncorrectCommandFormat(this.format));
+            return message.channel.send(fwk.getIncorrectCommandFormat(this.format));
         }
     },
     _banUser(guildMember, reason, message) {

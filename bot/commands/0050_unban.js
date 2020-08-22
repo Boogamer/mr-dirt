@@ -1,6 +1,6 @@
-const Fwk = require(__dirname + "/../fwk.js");
+const fwk = require(__dirname + "/../fwk.js");
 
-const commandName = Fwk.getCommandName("unban");
+const commandName = fwk.getCommandName("unban");
 
 module.exports = {
     onlyAdmin: true,
@@ -9,10 +9,10 @@ module.exports = {
     format: `${commandName} <USER>`,
     isValid(client, message, args) {
         return args.length == 1 &&
-            Fwk.isUserFromCommandArg(args[0]);
+            fwk.isUserFromCommandArg(args[0]);
     },
     execute(client, message, args) {
-        const userId = Fwk.getUserIdFromCommandArg(args[0]);
+        const userId = fwk.getUserIdFromCommandArg(args[0]);
         message.guild.fetchBans().then(banlist => {
             let found = false;
             banlist.each(baninfo => {

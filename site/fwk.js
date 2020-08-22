@@ -4,17 +4,23 @@ const exphbs = require("express-handlebars");
 const compression = require("compression");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
-const helpers = require('handlebars-helpers')();
+const helpers = require("handlebars-helpers")();
+
+const models = require(__dirname + "/../common/models.js");
+const i18n = require(__dirname + "/../common/i18n.js");
 
 module.exports = {
     _initParams: null,
     _hbs: null,
-    _locales: [],
-    _defaultLocale: "gb",
     init(params) {
         return new Promise((resolve, reject) => {
             this._initParams = params;
-            this._initLocales();
+            if (this._initParams.i18nPath) {
+                i18n.init(this._initParams.i18nPath);
+            }
+            if (this._initParams.modelsPath) {
+                models.init(this._initParams.modelsPath);
+            }
             this._initHbs();
             this._initApp();
             this._initRoutes();
@@ -62,7 +68,7 @@ module.exports = {
         this._app.use((req, res, next) => {
             const sess = req.session;
             if (sess.locale == null) {
-                sess.locale = this._defaultLocale;
+                sess.locale = i18n.getDefaultLocale();
             }
             res.locals.session = sess;
             next();
@@ -85,25 +91,10 @@ module.exports = {
             partialsDir: this._initParams.viewsPath + "/partials",
             helpers: {
                 label: (key, params, options) => {
-                    const locale = options.data.root._locals.session?.locale || this._defaultLocale;
-                    if (this._locales[locale][key] == null) {
-                        return key;
-                    }
-                    let value = this._locales[locale][key];
-                    params.split("|").forEach((param, index) => {
-                        value.replace("{" + index + "}", param);
-                    });
-                    return value;
+                    const locale = options.data.root._locals.session?.locale || i18n.getDefaultLocale();
+                    return i18n.getLabel(locale, key, params);
                 }
             }
-        });
-    },
-    _initLocales() {
-        const localesPath = __dirname + "/static/locales";
-        fs.readdirSync(localesPath).forEach(file => {
-            console.log(`Chargement locale "${file}"`);
-            const locale = require(localesPath + "/" + file);
-            this._locales[file.split(".")[0]] = locale;
         });
     }
 }

@@ -1,6 +1,6 @@
 const got = require("got");
 
-const Fwk = require(__dirname + "/../fwk.js");
+const fwk = require(__dirname + "/../fwk.js");
 
 module.exports = {
     init(app) {
@@ -10,7 +10,7 @@ module.exports = {
                 headers: { "authorization": req.session.authorization },
                 responseType: "json"
             }).then((result) => {
-                const routeRequestedBeforeAuthentication = Fwk.setAuthenticated(result.body, req);
+                const routeRequestedBeforeAuthentication = fwk.setAuthenticated(result.body, req);
                 res.json({
                     result: "OK",
                     routeRequestedBeforeAuthentication: routeRequestedBeforeAuthentication

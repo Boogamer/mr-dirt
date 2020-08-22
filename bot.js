@@ -6,10 +6,10 @@ if (process.env.NODE_ENV !== "production") {
 
 Fwk.init({
     commandPrefix: "&",
-    localesPath: __dirname + "/bot/locales",
+    i18nPath: __dirname + "/common/i18n",
+    modelsPath: __dirname + "/common/models",
     commandsPath: __dirname + "/bot/commands",
-    daemonsPath: __dirname + "/bot/daemons",
-    modelsPath: __dirname + "/bot/models"
+    daemonsPath: __dirname + "/bot/daemons"
 }).then(client => {
     client.on("message", message => {
         Fwk.moderate(message);

@@ -1,6 +1,6 @@
-const Fwk = require(__dirname + "/../fwk.js");
+const fwk = require(__dirname + "/../fwk.js");
 
-const commandName = Fwk.getCommandName("kick");
+const commandName = fwk.getCommandName("kick");
 
 module.exports = {
     onlyAdmin: true,
@@ -9,7 +9,7 @@ module.exports = {
     format: `${commandName} <USER>`,
     isValid(client, message, args) {
         return args.length == 1 &&
-            Fwk.isUserFromCommandArg(args[0]);
+            fwk.isUserFromCommandArg(args[0]);
     },
     execute(client, message, args) {
         const firstGuildMember = message.mentions.members.first();

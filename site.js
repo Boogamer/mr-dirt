@@ -5,6 +5,8 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 Fwk.init({
+    i18nPath: __dirname + "/common/i18n",
+    modelsPath: __dirname + "/common/models",
     staticPath: __dirname + "/site/static",
     routesPath: __dirname + "/site/routes",
     viewsPath: __dirname + "/site/templates",

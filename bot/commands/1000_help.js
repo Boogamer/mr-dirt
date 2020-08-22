@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
 
-const Fwk = require(__dirname + "/../fwk.js");
+const fwk = require(__dirname + "/../fwk.js");
 
-const commandName = Fwk.getCommandName("help");
+const commandName = fwk.getCommandName("help");
 
 module.exports = {
     onlyAdmin: true,
@@ -15,7 +15,7 @@ module.exports = {
     execute(client, message, args) {
         const icon = new Discord.MessageAttachment("./assets/icon.png");
         const fields = [];
-        Fwk.getCommandsList().forEach(command => {
+        fwk.getCommandsList().forEach(command => {
             fields.push({ name: command.description, value: command.format });
         });
         const helpMessage = {

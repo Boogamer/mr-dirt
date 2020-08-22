@@ -1,30 +1,29 @@
 const fs = require("fs");
 const Discord = require("discord.js");
-const Sequelize = require('sequelize');
 
 const moderation = require(__dirname + "/assets/moderation.json");
+const models = require(__dirname + "/../common/models.js");
+const i18n = require(__dirname + "/../common/i18n.js");
 
 module.exports = {
     _initParams: { commandPrefix: "&" },
-    _locales: {},
     _commands: {},
     _daemons: [],
-    _sequelize: null,
     _client: new Discord.Client(),
     init(params) {
         return new Promise((resolve, reject) => {
             this._initParams = params;
-            if (this._initParams.localesPath) {
-                this._loadLocales(this._initParams.localesPath);
+            if (this._initParams.i18nPath) {
+                i18n.init(this._initParams.i18nPath);
             }
             if (this._initParams.modelsPath) {
-                this._loadModels(this._initParams.modelsPath);
+                models.init(this._initParams.modelsPath);
             }
             if (this._initParams.commandsPath) {
-                this._loadCommands(this._initParams.commandsPath);
+                this._initCommands(this._initParams.commandsPath);
             }
             if (this._initParams.daemonsPath) {
-                this._loadDaemons(this._initParams.daemonsPath);
+                this._initDaemons(this._initParams.daemonsPath);
             }
             this._client.on("ready", () => {
                 console.log(`Logged in as ${this._client.user.tag}!`);
@@ -124,7 +123,7 @@ module.exports = {
         }
     },
     getModel(modelName) {
-        return this._sequelize.models[modelName];
+        return models.getModel(modelName);
     },
     _sendModerationWarning(message, words, moderationType) {
         message.channel.send({
@@ -141,21 +140,14 @@ module.exports = {
             }
         });
     },
-    _loadLocales(path) {
-        fs.readdirSync(path).forEach(file => {
-            console.log(`Chargement locale "${file}"`);
-            const locale = require(path + "/" + file);
-            this._locales[file] = locale;
-        });
-    },
-    _loadCommands(path) {
+    _initCommands(path) {
         fs.readdirSync(path).forEach(file => {
             console.log(`Chargement commande "${file}"`);
             const command = require(path + "/" + file);
             this._commands[command.name] = command;
         });
     },
-    _loadDaemons(path) {
+    _initDaemons(path) {
         fs.readdirSync(path).forEach(file => {
             console.log(`Chargement daemon "${file}"`);
             const daemon = require(path + "/" + file);
@@ -166,20 +158,5 @@ module.exports = {
                 daemon.tick(this._client);
             });
         }, 1000);
-    },
-    _loadModels(path) {
-        this._sequelize = new Sequelize('database', 'user', 'password', {
-            host: 'localhost',
-            dialect: 'sqlite',
-            logging: false,
-            storage: 'database.sqlite'
-        });
-        fs.readdirSync(path).forEach(file => {
-            console.log(`Chargement model "${file}"`);
-            const model = require(path + "/" + file);
-            model.init(this._sequelize).sync(model.syncOptions).then(seqModel => {
-                model.afterSync(seqModel);
-            });
-        });
     }
 };

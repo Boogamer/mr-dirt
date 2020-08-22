@@ -1,9 +1,9 @@
-const moment = require('moment');
+const moment = require("moment");
 
 module.exports = {
     tick(client) {
         /*
-        Fwk.getModel("mutes").findAll().then(mutes => {
+        fwk.getModel("mutes").findAll().then(mutes => {
             mutes.forEach(mute => {
                 if (moment().isAfter(moment(mute.endDateTime))) {
                     client.guilds.cache.map(guild => {
