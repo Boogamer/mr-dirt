@@ -1,10 +1,10 @@
-const Fwk = require(__dirname + "/site/fwk");
+const fwk = require(__dirname + "/site/fwk");
 
 if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
 
-Fwk.init({
+fwk.init({
     i18nPath: __dirname + "/common/i18n",
     modelsPath: __dirname + "/common/models",
     staticPath: __dirname + "/site/static",
