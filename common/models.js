@@ -10,7 +10,7 @@ module.exports = {
                 host: "localhost",
                 dialect: "sqlite",
                 logging: false,
-                storage: "database.sqlite"
+                storage: __dirname + "/database.sqlite"
             });
             fs.readdirSync(modelsPath).forEach(file => {
                 console.log(`Chargement model "${file}"`);
