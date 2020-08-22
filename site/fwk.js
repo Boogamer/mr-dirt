@@ -10,6 +10,7 @@ module.exports = {
     _initParams: null,
     _hbs: null,
     _locales: [],
+    _defaultLocale: "gb",
     init(params) {
         return new Promise((resolve, reject) => {
             this._initParams = params;
@@ -23,7 +24,7 @@ module.exports = {
     checkRoute(route, private, res, req) {
         if (private && req.session.user == null) {
             req.session.routeRequestedBeforeAuthentication = route;
-            res.redirect("https://discord.com/api/oauth2/authorize?client_id=739490722151137330&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&response_type=token&scope=identify%20email%20guilds");
+            res.redirect(this._initParams.discord.authorizePage);
             return false;
         }
         return true;
@@ -37,21 +38,10 @@ module.exports = {
             }
         } else {
             req.session.destroy((err) => {
-                
+
             });
         }
         return req.session?.routeRequestedBeforeAuthentication;
-    },
-    getLabel(key, params, options) {
-        const locale = options.data.root._locals.session?.locale || "gb";
-        if (this._locales[locale][key] == null) {
-            return key;
-        }
-        let value = this._locales[locale][key];
-        params.split("|").forEach((param, index) => {
-            value.replace("{" + index + "}", param);
-        });
-        return value;
     },
     _initApp() {
         this._app = express();
@@ -69,8 +59,12 @@ module.exports = {
             sess.cookie.secure = true;
         }
         this._app.use(session(sess));
-        this._app.use(function (req, res, next) {
-            res.locals.session = req.session;
+        this._app.use((req, res, next) => {
+            const sess = req.session;
+            if (sess.locale == null) {
+                sess.locale = this._defaultLocale;
+            }
+            res.locals.session = sess;
             next();
         });
         this._app.set("views", this._initParams.viewsPath);
@@ -85,14 +79,21 @@ module.exports = {
         });
     },
     _initHbs() {
-        const that = this;
         this._hbs = exphbs.create({
             extname: ".hbs",
             layoutsDir: this._initParams.viewsPath + "/layouts",
             partialsDir: this._initParams.viewsPath + "/partials",
             helpers: {
-                label: function(key, params, options) {
-                    return that.getLabel(key, params, options);
+                label: (key, params, options) => {
+                    const locale = options.data.root._locals.session?.locale || this._defaultLocale;
+                    if (this._locales[locale][key] == null) {
+                        return key;
+                    }
+                    let value = this._locales[locale][key];
+                    params.split("|").forEach((param, index) => {
+                        value.replace("{" + index + "}", param);
+                    });
+                    return value;
                 }
             }
         });
