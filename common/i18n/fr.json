@@ -10,6 +10,8 @@
     "I18N_OWNER": "Propriértaire",
     "I18N_YES" : "Oui",
     "I18N_NO" : "Non",
+    "I18N_INSTALL": "Installer",
+    "I18N_DASHBOARD": "Tableau de Bord",
     "I18N_LOCALE_FR": "Français",
     "I18N_LOCALE_GB": "English"
 }

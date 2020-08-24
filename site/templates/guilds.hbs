@@ -19,6 +19,12 @@
         </div>
         <div class="col-md-10">
             <div class="card-body">
+                {{#unless installed}}
+                <a href="#" class="btn btn-primary float-right">{{label "I18N_INSTALL" ""}}</a>
+                {{/unless}}
+                {{#if installed}}
+                <a href="/dashboard/{{id}}" class="btn btn-success float-right">{{label "I18N_DASHBOARD" ""}}</a>
+                {{/if}}
                 <h5 class="card-title">{{name}}</h5>
                 <p class="card-text">
                     {{label "I18N_OWNER" ""}}

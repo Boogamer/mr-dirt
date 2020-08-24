@@ -6,7 +6,7 @@ const models = require(__dirname + "/../common/models.js");
 const i18n = require(__dirname + "/../common/i18n.js");
 
 module.exports = {
-    _initParams: { commandPrefix: "&" },
+    _initParams: null,
     _commands: {},
     _daemons: [],
     _client: new Discord.Client(),
@@ -25,9 +25,6 @@ module.exports = {
             if (this._initParams.daemonsPath) {
                 this._initDaemons(this._initParams.daemonsPath);
             }
-            this._client.on("ready", () => {
-                console.log(`Logged in as ${this._client.user.tag}!`);
-            });
             resolve(this._client);
         });
     },

@@ -49,6 +49,9 @@ module.exports = {
         }
         return req.session?.routeRequestedBeforeAuthentication;
     },
+    getBotClient() {
+        return this._initParams.client;
+    },
     _initApp() {
         this._app = express();
         this._app.use(express.static(this._initParams.staticPath));

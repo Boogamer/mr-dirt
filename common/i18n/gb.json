@@ -10,6 +10,8 @@
     "I18N_OWNER": "Owner",
     "I18N_YES" : "Yes",
     "I18N_NO" : "No",
+    "I18N_INSTALL": "Install",
+    "I18N_DASHBOARD": "Dashboard",
     "I18N_LOCALE_FR": "Français",
     "I18N_LOCALE_GB": "English"
 }
