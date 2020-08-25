@@ -4,6 +4,7 @@ const exphbs = require("express-handlebars");
 const compression = require("compression");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const helpers = require("handlebars-helpers")();
 
 const models = require(__dirname + "/../common/models.js");
@@ -59,6 +60,10 @@ module.exports = {
         this._app.use(cookieParser());
         const sess = {
             secret: process.env.SITE_SESSION_SECRET_KEY,
+            store: new SequelizeStore({
+                db: models.getDatabase(),
+                table: "sessions"
+            }),
             resave: false,
             saveUninitialized: true,
             cookie: {}

@@ -23,6 +23,7 @@
   "dependencies": {
     "bootstrap-icons": "^1.0.0-alpha5",
     "compression": "^1.7.4",
+    "connect-session-sequelize": "^7.0.1",
     "cookie-parser": "^1.4.5",
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",

@@ -22,6 +22,9 @@ module.exports = {
             this._initialized = true;
         }
     },
+    getDatabase() {
+        return this._sequelize;
+    },
     getModel(modelName) {
         return this._sequelize.models[modelName];
     }
